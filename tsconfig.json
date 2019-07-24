@@ -9,7 +9,7 @@
       "sourceMap": false
   },
   "include": [
-      "ts/**/*", "tests/mock"
+      "ts/**/*",
   ],
   "exclude": [
       "node_modules",
