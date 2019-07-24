@@ -3,7 +3,7 @@ import * as mockAgents from './mock/user-agents'
 
 /* isSafari()
 -------------------------- */
-describe('the isSafari():boolean browser method returns', () => {
+describe('the isSafari() browser method returns', () => {
   it('true if the userAgent is Safari', () => {
     // @ts-ignore
     window.navigator.userAgent = mockAgents.safari
