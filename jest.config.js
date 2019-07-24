@@ -2,6 +2,10 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   globals: {
-    navigator: true
+    window: {
+      navigator: {
+        userAgent: 'test'
+      }
+    }
   }
 };
