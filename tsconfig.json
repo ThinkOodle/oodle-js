@@ -1,18 +1,21 @@
 {
   "compilerOptions": {
-      "moduleResolution": "node",
-      "noImplicitAny": false,
-      "removeComments": true,
-      "preserveConstEnums": true,
-      "target": "es3",
-      "outDir": "js",
-      "sourceMap": false
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "target": "es3",
+    "rootDirs": ["ts", "types"],
+    "outFile": "js/index.js",
+    "sourceMap": false,
+    "module": "system"
   },
   "include": [
-      "ts/**/*",
+    "ts/**/*.ts",
   ],
   "exclude": [
-      "node_modules",
-      "**/*.spec.ts"
+    "node_modules",
+    "**/*.spec.ts",
+    "types"
   ]
 }

@@ -10,6 +10,8 @@
   "dependencies": {
     "@types/jest": "^24.0.15",
     "@types/jsdom": "^12.2.4",
+    "axios": "^0.19.0",
+    "prismic-javascript": "^2.1.1",
     "typescript": "^3.5.3"
   },
   "devDependencies": {
