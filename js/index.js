@@ -303,3 +303,21 @@ System.register("ts/index", ["ts/browser-methods", "ts/prismic-methods", "ts/ser
         }
     };
 });
+System.register("ts/utility-methods", [], function (exports_7, context_7) {
+    "use strict";
+    var __moduleName = context_7 && context_7.id;
+    function convertSingleObjectToArray(obj) {
+        if (Array.isArray(obj)) {
+            return obj;
+        }
+        else {
+            return [obj];
+        }
+    }
+    exports_7("convertSingleObjectToArray", convertSingleObjectToArray);
+    return {
+        setters: [],
+        execute: function () {
+        }
+    };
+});
