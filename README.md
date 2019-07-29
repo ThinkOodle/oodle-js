@@ -13,7 +13,7 @@ With this being written in TypeScript, you will need to build _everytime_ you pu
 $ yarn
 
 # Compile TypeScript to JavaScript
-$ tsc
+$ yarn compile
 ```
 
 The `tsc` command will read off of the `tsconfig.json` file in the root directory.
