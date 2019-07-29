@@ -4,11 +4,12 @@
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
-    "target": "es3",
+    "target": "ES6",
     "rootDirs": ["ts", "types"],
-    "outFile": "js/index.js",
+    "outDir": "js",
     "sourceMap": false,
-    "module": "system"
+    "module": "ES6",
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "ts/**/*.ts",
