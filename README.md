@@ -18,6 +18,15 @@ $ yarn compile
 
 The `tsc` command will read off of the `tsconfig.json` file in the root directory.
 
+> All files should have the comment `// Generate Comment` on the first line of the file. 
+> 
+> All compiled `js` files will have the following comment; notifying the developer to modify the source code instead.
+>
+> ```js
+> // THESE ARE GENERATED FILES - DO NOT EDIT 
+> // PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
+> ```
+
 ## Unit Testing
 
 Jest unit testing is configured with this project. All tests are in the `/tests` directory and named accordingly to the file it's testings.
