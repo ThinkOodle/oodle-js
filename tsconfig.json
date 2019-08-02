@@ -2,7 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "noImplicitAny": false,
-    "removeComments": true,
+    "removeComments": false,
     "preserveConstEnums": true,
     "target": "ES6",
     "rootDirs": ["ts", "types"],

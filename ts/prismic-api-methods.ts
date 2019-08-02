@@ -1,3 +1,5 @@
+// Generate Comment
+
 import Prismic from 'prismic-javascript';
 export const prismicEndpoint = 'https://oodle-vue.cdn.prismic.io/api/v2'
 

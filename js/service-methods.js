@@ -1,3 +1,6 @@
+// THESE ARE GENERATED FILES - DO NOT EDIT 
+// PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
+
 import axios from 'axios';
 export function getService(url) {
     return axios.get(url)

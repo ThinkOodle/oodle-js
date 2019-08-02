@@ -1,3 +1,5 @@
+// Generate Comment
+
 export function isSafari(): boolean {
   const ua: string = window.navigator.userAgent.toLowerCase()
   return ua.indexOf('safari') > -1 && ua.indexOf('chrome') == -1 ? true : false 

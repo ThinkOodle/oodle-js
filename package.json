@@ -5,7 +5,7 @@
   "main": "js/index.js",
   "scripts": {
     "test": "jest",
-    "compile": "tsc && cp js/ts/* js/ && rm -rf js/ts/ js/types"
+    "compile": "tsc && cp js/ts/* js/ && rm -rf js/ts/ js/types && replace '// Generate Comment' '// THESE ARE GENERATED FILES - DO NOT EDIT \n// PLEASE MODIFY THE TYPESCRIPT SOURCE FILES\n' js/*.js"
   },
   "author": "Dave Berning",
   "dependencies": {
@@ -13,6 +13,7 @@
     "@types/jsdom": "^12.2.4",
     "axios": "^0.19.0",
     "prismic-javascript": "^2.1.1",
+    "replace": "^1.1.0",
     "typescript": "^3.5.3"
   },
   "devDependencies": {

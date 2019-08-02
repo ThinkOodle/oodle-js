@@ -1,3 +1,6 @@
+// THESE ARE GENERATED FILES - DO NOT EDIT 
+// PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
+
 import Prismic from 'prismic-javascript';
 export const prismicEndpoint = 'https://oodle-vue.cdn.prismic.io/api/v2';
 export class Api {
@@ -13,6 +16,7 @@ export class Api {
     }
     getAllDocs() {
         return Prismic.getApi(prismicEndpoint).then(api => {
+            // @ts-ignore
             return api
                 .query()
                 .then(res => res)
@@ -26,7 +30,9 @@ export class Api {
             return api
                 .query(Prismic.Predicates.at("document.type", "blog_page"), {
                 orderings: "[my.blog_page.creation_date desc]",
+                // @ts-ignore
                 pageSize: params.numPostsToLoad,
+                // @ts-ignore
                 page: params.page
             })
                 .then(res => res)
@@ -37,6 +43,7 @@ export class Api {
     }
     getPostCategories() {
         return Prismic.getApi(prismicEndpoint).then(api => {
+            // @ts-ignore
             return api
                 .query(Prismic.Predicates.at("document.type", "blog_post_categories"))
                 .then(res => {
@@ -52,10 +59,13 @@ export class Api {
             return api
                 .query([
                 Prismic.Predicates.at("document.type", "blog_page"),
+                // @ts-ignore
                 Prismic.Predicates.at("document.tags", [params.category])
             ], {
                 orderings: "[my.blog_page.creation_date desc]",
+                // @ts-ignore
                 pageSize: params.numPostsToLoad,
+                // @ts-ignore
                 page: params.page
             })
                 .then(res => res)
@@ -145,6 +155,7 @@ export class Api {
     }
     getGlobalSections() {
         return Prismic.getApi(prismicEndpoint).then(api => {
+            // @ts-ignore
             return api
                 .query(Prismic.Predicates.at("document.type", "global_sections"))
                 .then(res => res.results[0].data)

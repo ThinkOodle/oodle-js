@@ -1,3 +1,6 @@
+// THESE ARE GENERATED FILES - DO NOT EDIT 
+// PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
+
 export function isSafari() {
     const ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('safari') > -1 && ua.indexOf('chrome') == -1 ? true : false;
