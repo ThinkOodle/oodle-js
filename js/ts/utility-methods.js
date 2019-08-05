@@ -1,9 +1,4 @@
 // Generate Comment
 export function convertSingleObjectToArray(obj) {
-    if (Array.isArray(obj)) {
-        return obj;
-    }
-    else {
-        return [obj];
-    }
+    return Array.isArray(obj) ? obj : [obj];
 }
