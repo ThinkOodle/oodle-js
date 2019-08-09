@@ -1,5 +1,7 @@
 /* Mobile Operating Systems
 ----------------------------------------- */
+import {OperatingSystem} from '../types'
+
 export function isIOS(): boolean {
   const ua: string = window.navigator.userAgent.toLowerCase()
   return ua.indexOf('iphone') > -1 && ua.indexOf('safari') > -1
@@ -30,4 +32,13 @@ export function isWindows(): boolean {
 export function isLinux(): boolean {
   const ua: string = window.navigator.userAgent.toLowerCase()
   return ua.indexOf('linux') > -1
+}
+
+export const operatingSystem: OperatingSystem = {
+  isIOS,
+  isAndroid,
+  isMacOS,
+  isChromeOS,
+  isWindows,
+  isLinux
 }

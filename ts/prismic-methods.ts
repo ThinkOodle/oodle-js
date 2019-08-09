@@ -5,9 +5,9 @@
  * https://prismic.io/docs/vuejs/beyond-the-api/link-resolving
  */
 
-import { PrismicDocument } from '../types/prismic'
+import {PrismicDocument} from '../types/prismic'
 
-export function linkResolver(doc : PrismicDocument) {
+export function linkResolver(doc: PrismicDocument): string {
   if (doc.isBroken) {
     return '/not-found'
   }

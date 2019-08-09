@@ -5,7 +5,7 @@
   "main": "js/index.js",
   "scripts": {
     "test": "jest",
-    "compile": "tsc && cp js/ts/* js/ && rm -rf js/ts/ js/types && replace '// Generate Comment' '// THESE ARE GENERATED FILES - DO NOT EDIT \n// PLEASE MODIFY THE TYPESCRIPT SOURCE FILES\n' js/*.js"
+    "compile": "tsc && cp js/ts/* js/ && replace '// Generate Comment' '// THESE ARE GENERATED FILES - DO NOT EDIT \n// PLEASE MODIFY THE TYPESCRIPT SOURCE FILES\n' js/*.js && rm -rf js/ts/ js/types"
   },
   "author": "Dave Berning",
   "dependencies": {

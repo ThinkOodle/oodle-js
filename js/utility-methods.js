@@ -2,10 +2,5 @@
 // PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
 
 export function convertSingleObjectToArray(obj) {
-    if (Array.isArray(obj)) {
-        return obj;
-    }
-    else {
-        return [obj];
-    }
+    return Array.isArray(obj) ? obj : [obj];
 }

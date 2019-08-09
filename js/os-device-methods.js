@@ -1,5 +1,3 @@
-/* Mobile Operating Systems
------------------------------------------ */
 export function isIOS() {
     const ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('iphone') > -1 && ua.indexOf('safari') > -1;
@@ -26,3 +24,11 @@ export function isLinux() {
     const ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('linux') > -1;
 }
+export const operatingSystem = {
+    isIOS,
+    isAndroid,
+    isMacOS,
+    isChromeOS,
+    isWindows,
+    isLinux
+};
