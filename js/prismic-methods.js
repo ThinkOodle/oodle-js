@@ -1,7 +1,9 @@
+"use strict";
 // THESE ARE GENERATED FILES - DO NOT EDIT 
 // PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
 
-export function linkResolver(doc) {
+exports.__esModule = true;
+function linkResolver(doc) {
     if (doc.isBroken) {
         return '/not-found';
     }
@@ -13,3 +15,4 @@ export function linkResolver(doc) {
     }
     return '/not-found';
 }
+exports.linkResolver = linkResolver;

@@ -1,31 +1,39 @@
+"use strict";
 // THESE ARE GENERATED FILES - DO NOT EDIT 
 // PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
 
-export function isSafari() {
-    const ua = window.navigator.userAgent.toLowerCase();
+exports.__esModule = true;
+function isSafari() {
+    var ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('safari') > -1 && ua.indexOf('chrome') == -1;
 }
-export function isChrome() {
-    const ua = window.navigator.userAgent.toLowerCase();
+exports.isSafari = isSafari;
+function isChrome() {
+    var ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('chrome') > -1 && ua.indexOf('edge') === -1;
 }
-export function isFirefox() {
-    const ua = window.navigator.userAgent.toLowerCase();
+exports.isChrome = isChrome;
+function isFirefox() {
+    var ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('firefox') > -1;
 }
-export function isIE() {
-    const ua = window.navigator.userAgent.toLowerCase();
+exports.isFirefox = isFirefox;
+function isIE() {
+    var ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('msie') > -1;
 }
-export function isEdge() {
-    const ua = window.navigator.userAgent.toLowerCase();
+exports.isIE = isIE;
+function isEdge() {
+    var ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('edge') >= 0;
 }
-export function isOpera() {
-    const ua = window.navigator.userAgent.toLowerCase();
+exports.isEdge = isEdge;
+function isOpera() {
+    var ua = window.navigator.userAgent.toLowerCase();
     return ua.indexOf('op') > -1;
 }
-export function getBrowser() {
+exports.isOpera = isOpera;
+function getBrowser() {
     if (isChrome())
         return 'chrome';
     else if (isSafari())
@@ -41,12 +49,13 @@ export function getBrowser() {
     else
         return undefined;
 }
-export const browser = {
-    isChrome,
-    isSafari,
-    isFirefox,
-    isOpera,
-    isEdge,
-    isIE,
+exports.getBrowser = getBrowser;
+exports.browser = {
+    isChrome: isChrome,
+    isSafari: isSafari,
+    isFirefox: isFirefox,
+    isOpera: isOpera,
+    isEdge: isEdge,
+    isIE: isIE,
     get: getBrowser
 };

@@ -1,65 +1,80 @@
+"use strict";
 // THESE ARE GENERATED FILES - DO NOT EDIT 
 // PLEASE MODIFY THE TYPESCRIPT SOURCE FILES
 
-import Prismic from 'prismic-javascript';
-export const prismicEndpoint = 'https://oodle-vue.cdn.prismic.io/api/v2';
-export function getDocByID(ID) {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+exports.__esModule = true;
+var prismic_javascript_1 = require("prismic-javascript");
+exports.prismicEndpoint = 'https://oodle-vue.cdn.prismic.io/api/v2';
+function getDocByID(ID) {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
             .getByID(ID)
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getAllDocs() {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getDocByID = getDocByID;
+function getAllDocs() {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         // @ts-ignore
         return api
             .query()
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getAllPosts(params = {}) {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getAllDocs = getAllDocs;
+function getAllPosts(params) {
+    if (params === void 0) { params = {}; }
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
-            .query(Prismic.Predicates.at('document.type', 'blog_page'), {
+            .query(prismic_javascript_1["default"].Predicates.at('document.type', 'blog_page'), {
             orderings: '[my.blog_page.creation_date desc]',
             // @ts-ignore
             pageSize: params.numPostsToLoad,
             // @ts-ignore
             page: params.page
         })
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getPostCategories() {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getAllPosts = getAllPosts;
+function getPostCategories() {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         // @ts-ignore
         return api
-            .query(Prismic.Predicates.at('document.type', 'blog_post_categories'))
-            .then(res => {
-            return Object.assign({}, res.results[0].data);
-        })
-            .catch(err => {
+            .query(prismic_javascript_1["default"].Predicates.at('document.type', 'blog_post_categories'))
+            .then(function (res) {
+            return __assign({}, res.results[0].data);
+        })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getPostsByCategory(params = {}) {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getPostCategories = getPostCategories;
+function getPostsByCategory(params) {
+    if (params === void 0) { params = {}; }
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
             .query([
-            Prismic.Predicates.at('document.type', 'blog_page'),
+            prismic_javascript_1["default"].Predicates.at('document.type', 'blog_page'),
             // @ts-ignore
-            Prismic.Predicates.at('document.tags', [params.category])
+            prismic_javascript_1["default"].Predicates.at('document.tags', [params.category])
         ], {
             orderings: '[my.blog_page.creation_date desc]',
             // @ts-ignore
@@ -67,120 +82,121 @@ export function getPostsByCategory(params = {}) {
             // @ts-ignore
             page: params.page
         })
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getPostBySlug(slug) {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getPostsByCategory = getPostsByCategory;
+function getPostBySlug(slug) {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
             .getByUID('blog_page', slug)
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getAllCaseStudies() {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getPostBySlug = getPostBySlug;
+function getAllCaseStudies() {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
-            .query(Prismic.Predicates.at('document.type', 'case_study'), {
+            .query(prismic_javascript_1["default"].Predicates.at('document.type', 'case_study'), {
             pageSize: 100
         })
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getCaseStudyBySlug(slug) {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getAllCaseStudies = getAllCaseStudies;
+function getCaseStudyBySlug(slug) {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
             .getByUID('case_study', slug)
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getAllServices() {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getCaseStudyBySlug = getCaseStudyBySlug;
+function getAllServices() {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
-            .query(Prismic.Predicates.at('document.type', 'service'), {
+            .query(prismic_javascript_1["default"].Predicates.at('document.type', 'service'), {
             orderings: '[my.service.date desc]',
             pageSize: 100
         })
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getServiceBySlug(slug) {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getAllServices = getAllServices;
+function getServiceBySlug(slug) {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
             .getByUID('service', slug)
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getAllSinglePages() {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getServiceBySlug = getServiceBySlug;
+function getAllSinglePages() {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
-            .query(Prismic.Predicates.at('document.type', 'single_page'), {
+            .query(prismic_javascript_1["default"].Predicates.at('document.type', 'single_page'), {
             pageSize: 100
         })
-            .then(res => res)
-            .catch(err => {
+            .then(function (res) { return res; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getSingleBySlug(slug) {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getAllSinglePages = getAllSinglePages;
+function getSingleBySlug(slug) {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         return api
             .getByUID('single_page', slug)
-            .then(res => {
-            return Object.assign({}, res.data, { id: res.id, uid: res.uid });
-        })
-            .catch(err => {
+            .then(function (res) {
+            return __assign({}, res.data, { id: res.id, uid: res.uid });
+        })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getGlobalSections() {
-    return Prismic.getApi(prismicEndpoint).then(api => {
+exports.getSingleBySlug = getSingleBySlug;
+function getGlobalSections() {
+    return prismic_javascript_1["default"].getApi(exports.prismicEndpoint).then(function (api) {
         // @ts-ignore
         return api
-            .query(Prismic.Predicates.at('document.type', 'global_sections'))
-            .then(res => res.results[0].data)
-            .catch(err => {
+            .query(prismic_javascript_1["default"].Predicates.at('document.type', 'global_sections'))
+            .then(function (res) { return res.results[0].data; })["catch"](function (err) {
             throw err;
         });
     });
 }
-export function getInlineSVG(imageSrc) {
-    return fetch(imageSrc, { cache: 'reload' }).then(res => {
+exports.getGlobalSections = getGlobalSections;
+function getInlineSVG(imageSrc) {
+    return fetch(imageSrc, { cache: 'reload' }).then(function (res) {
         return res.text();
     });
 }
-export const prismic = {
-    getDocByID,
-    getAllDocs,
-    getAllPosts,
-    getPostCategories,
-    getPostsByCategory,
-    getPostBySlug,
-    getAllCaseStudies,
-    getCaseStudyBySlug,
-    getAllServices,
-    getServiceBySlug,
-    getAllSinglePages,
-    getSingleBySlug,
-    getGlobalSections,
-    getInlineSVG
+exports.getInlineSVG = getInlineSVG;
+exports.prismic = {
+    getDocByID: getDocByID,
+    getAllDocs: getAllDocs,
+    getAllPosts: getAllPosts,
+    getPostCategories: getPostCategories,
+    getPostsByCategory: getPostsByCategory,
+    getPostBySlug: getPostBySlug,
+    getAllCaseStudies: getAllCaseStudies,
+    getCaseStudyBySlug: getCaseStudyBySlug,
+    getAllServices: getAllServices,
+    getServiceBySlug: getServiceBySlug,
+    getAllSinglePages: getAllSinglePages,
+    getSingleBySlug: getSingleBySlug,
+    getGlobalSections: getGlobalSections,
+    getInlineSVG: getInlineSVG
 };

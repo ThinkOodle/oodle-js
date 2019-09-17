@@ -4,19 +4,14 @@
     "noImplicitAny": false,
     "removeComments": false,
     "preserveConstEnums": true,
-    "target": "ES6",
+    "target": "ES3",
     "rootDirs": ["ts", "types"],
     "outDir": "js",
     "sourceMap": false,
-    "module": "ES6",
-    "allowSyntheticDefaultImports": true
+    "module": "CommonJS",
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true
   },
-  "include": [
-    "ts/**/*.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "**/*.spec.ts",
-    "types"
-  ]
+  "include": ["ts/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts", "types"]
 }
