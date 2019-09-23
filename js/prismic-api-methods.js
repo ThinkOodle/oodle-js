@@ -1,6 +1,6 @@
 import Prismic from "prismic-javascript";
 import { prepareSnakeCaseData } from "./utility-methods";
-export function getDocTypeByID(docType, UID, prismicEndpoint) {
+export function getDocTypeByID(prismicEndpoint, docType, UID) {
     return Prismic.getApi(prismicEndpoint).then(api => {
         return api
             .getByUID(docType, UID)
