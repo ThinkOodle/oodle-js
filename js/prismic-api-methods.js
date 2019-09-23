@@ -1,10 +1,12 @@
 import Prismic from "prismic-javascript";
+import { prepareSnakeCaseData } from "./utility-methods";
 export function getDocTypeByID(docType, UID, prismicEndpoint) {
     return Prismic.getApi(prismicEndpoint).then(api => {
         return api
             .getByUID(docType, UID)
             .then(res => {
-            return Object.assign({}, res.data, { id: res.id, uid: res.uid });
+            const formattedRes = prepareSnakeCaseData(res);
+            return Object.assign({}, formattedRes.data, { id: formattedRes.id, uid: formattedRes.uid });
         })
             .catch(err => {
             throw err;

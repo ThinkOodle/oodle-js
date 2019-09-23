@@ -1,5 +1,6 @@
 import Prismic from "prismic-javascript";
 import { PrismicAPI } from "../types";
+import { prepareSnakeCaseData } from "./utility-methods";
 
 export function getDocTypeByID(
   docType: string,
@@ -10,7 +11,12 @@ export function getDocTypeByID(
     return api
       .getByUID(docType, UID)
       .then(res => {
-        return { ...res.data, id: res.id, uid: res.uid };
+        const formattedRes = prepareSnakeCaseData(res);
+        return {
+          ...formattedRes.data,
+          id: formattedRes.id,
+          uid: formattedRes.uid
+        };
       })
       .catch(err => {
         throw err;
