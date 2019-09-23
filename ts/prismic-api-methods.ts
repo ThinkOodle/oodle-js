@@ -25,11 +25,11 @@ export function getDocTypeByID(
 }
 
 export function getSingleDocByType(prismicEndpoint: string, docType: string) {
-  Prismic.getApi(prismicEndpoint).then(api => {
+  return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getSingle(docType)
-      .then(function(res) {
-        const formattedRes = prepareSnakeCaseData(res);
+      .then(function(response) {
+        const formattedRes = prepareSnakeCaseData(response);
         return {
           ...formattedRes.data,
           id: formattedRes.id,

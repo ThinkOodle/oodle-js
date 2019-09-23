@@ -14,11 +14,11 @@ export function getDocTypeByID(prismicEndpoint, docType, UID) {
     });
 }
 export function getSingleDocByType(prismicEndpoint, docType) {
-    Prismic.getApi(prismicEndpoint).then(api => {
+    return Prismic.getApi(prismicEndpoint).then(api => {
         return api
             .getSingle(docType)
-            .then(function (res) {
-            const formattedRes = prepareSnakeCaseData(res);
+            .then(function (response) {
+            const formattedRes = prepareSnakeCaseData(response);
             return Object.assign({}, formattedRes.data, { id: formattedRes.id, uid: docType });
         })
             .catch(err => {
