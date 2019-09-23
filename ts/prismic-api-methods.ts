@@ -1,7 +1,11 @@
 import Prismic from "prismic-javascript";
 import { PrismicAPI } from "../types";
 
-export function getDocTypeByID(docType, UID, prismicEndpoint) {
+export function getDocTypeByID(
+  docType: string,
+  UID: string,
+  prismicEndpoint: string
+) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getByUID(docType, UID)
@@ -14,21 +18,19 @@ export function getDocTypeByID(docType, UID, prismicEndpoint) {
   });
 }
 
-export function getAllDocs(prismicEndpoint) {
+export function getAllDocs(prismicEndpoint: string) {
   return Prismic.getApi(prismicEndpoint).then(api => {
-    return (
-      api
-        // @ts-ignore
-        .query()
-        .then(res => res)
-        .catch(err => {
-          throw err;
-        })
-    );
+    // @ts-ignore
+    return api
+      .query()
+      .then(res => res)
+      .catch(err => {
+        throw err;
+      });
   });
 }
 
-export function getAllPosts(prismicEndpoint, params = {}) {
+export function getAllPosts(prismicEndpoint: string, params = {}) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .query(Prismic.Predicates.at("document.type", "blog_page"), {
@@ -45,7 +47,7 @@ export function getAllPosts(prismicEndpoint, params = {}) {
   });
 }
 
-export function getPostCategories(prismicEndpoint) {
+export function getPostCategories(prismicEndpoint: string) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     // @ts-ignore
     return api
@@ -59,7 +61,7 @@ export function getPostCategories(prismicEndpoint) {
   });
 }
 
-export function getPostsByCategory(prismicEndpoint, params = {}) {
+export function getPostsByCategory(prismicEndpoint: string, params = {}) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .query(
@@ -83,7 +85,7 @@ export function getPostsByCategory(prismicEndpoint, params = {}) {
   });
 }
 
-export function getPostBySlug(slug) {
+export function getPostBySlug(prismicEndpoint: string, slug) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getByUID("blog_page", slug)
@@ -94,7 +96,7 @@ export function getPostBySlug(slug) {
   });
 }
 
-export function getAllCaseStudies() {
+export function getAllCaseStudies(prismicEndpoint: string) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .query(Prismic.Predicates.at("document.type", "case_study"), {
@@ -107,7 +109,7 @@ export function getAllCaseStudies() {
   });
 }
 
-export function getCaseStudyBySlug(slug) {
+export function getCaseStudyBySlug(prismicEndpoint: string, slug) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getByUID("case_study", slug)
@@ -132,7 +134,7 @@ export function getAllServices(prismicEndpoint) {
   });
 }
 
-export function getServiceBySlug(prismicEndpoint, slug) {
+export function getServiceBySlug(prismicEndpoint: string, slug) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getByUID("service", slug)
@@ -143,7 +145,7 @@ export function getServiceBySlug(prismicEndpoint, slug) {
   });
 }
 
-export function getAllSinglePages(prismicEndpoint) {
+export function getAllSinglePages(prismicEndpoint: string) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .query(Prismic.Predicates.at("document.type", "single_page"), {
@@ -156,7 +158,7 @@ export function getAllSinglePages(prismicEndpoint) {
   });
 }
 
-export function getSingleBySlug(prismicEndpoint, slug) {
+export function getSingleBySlug(prismicEndpoint: string, slug) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getByUID("single_page", slug)
@@ -169,7 +171,7 @@ export function getSingleBySlug(prismicEndpoint, slug) {
   });
 }
 
-export function getGlobalSections(prismicEndpoint) {
+export function getGlobalSections(prismicEndpoint: string) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     // @ts-ignore
     return api

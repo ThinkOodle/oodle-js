@@ -5,18 +5,18 @@ export interface PrismicAPI {
     prismicEndpoint: string
   ) => any;
   getAllDocs: (prismicEndpoint: string) => any;
-  getAllPosts: (params) => any;
+  getAllPosts: (prismicEndpoint: string, params) => any;
   getPostCategories: (prismicEndpoint: string) => any;
-  getPostsByCategory: (params) => any;
-  getPostBySlug: (slug: string) => any;
-  getAllCaseStudies: () => any;
-  getCaseStudyBySlug: (slug: string) => any;
+  getPostsByCategory: (prismicEndpoint: string, params) => any;
+  getPostBySlug: (prismicEndpoint: string, slug: string) => any;
+  getAllCaseStudies: (prismicEndpoint: string) => any;
+  getCaseStudyBySlug: (prismicEndpoint: string, slug: string) => any;
   getAllServices: (prismicEndpoint: string) => any;
   getServiceBySlug: (prismicEndpoint: string, slug: string) => any;
   getAllSinglePages: (prismicEndpoint: string) => any;
   getSingleBySlug: (prismicEndpoint: string, slug: string) => any;
   getGlobalSections: (prismicEndpoint: string) => any;
-  getInlineSVG: (imageSrc: string) => any;
+  getInlineSVG: (prismicEndpoint: string, imageSrc: string) => any;
 }
 
 export interface PrismicDocument {
