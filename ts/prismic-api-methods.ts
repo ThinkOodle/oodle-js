@@ -24,6 +24,24 @@ export function getDocTypeByID(
   });
 }
 
+export function getSingleDocByType(prismicEndpoint: string, docType: string) {
+  Prismic.getApi(prismicEndpoint).then(api => {
+    return api
+      .getSingle(docType)
+      .then(function(res) {
+        const formattedRes = prepareSnakeCaseData(res);
+        return {
+          ...formattedRes.data,
+          id: formattedRes.id,
+          uid: docType
+        };
+      })
+      .catch(err => {
+        throw err;
+      });
+  });
+}
+
 export function getAllDocs(prismicEndpoint: string) {
   return Prismic.getApi(prismicEndpoint).then(api => {
     // @ts-ignore
@@ -197,6 +215,7 @@ export function getInlineSVG(imageSrc) {
 
 export const prismic: PrismicAPI = {
   getDocTypeByID,
+  getSingleDocByType,
   getAllDocs,
   getAllPosts,
   getPostCategories,

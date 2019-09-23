@@ -4,6 +4,7 @@ export interface PrismicAPI {
     UID: string,
     prismicEndpoint: string
   ) => any;
+  getSingleDocByType: (prismicEndpoint: string, docType: string) => any;
   getAllDocs: (prismicEndpoint: string) => any;
   getAllPosts: (prismicEndpoint: string, params) => any;
   getPostCategories: (prismicEndpoint: string) => any;
