@@ -67,9 +67,12 @@ export function createSectionsBySlice(doc) {
         }
     });
     const allSectionsReady = setSectionRichText(newObject);
+    if (allSectionsReady.body) {
+        delete allSectionsReady.body;
+    }
     return allSectionsReady;
 }
-export const createLoopableSections = function (pageObject) {
+export function createLoopableSections(pageObject) {
     const sections = {};
     const sectionTypes = Object.keys(Object.assign({}, pageObject));
     sectionTypes.map(sectionType => {
@@ -92,4 +95,4 @@ export const createLoopableSections = function (pageObject) {
         }
     });
     return sections;
-};
+}

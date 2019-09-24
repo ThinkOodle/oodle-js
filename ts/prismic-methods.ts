@@ -17,7 +17,7 @@ import htmlSerializer from '../utils/html-serializer'
 import prismicDOM from 'prismic-dom'
 export const setSectionRichText = function(
   section: PrismicSlice,
-): PrismicSlice {
+): any {
   const keys: string[] = Object.keys(section)
   keys.map((key: string) => {
     if (section[key]) {
@@ -91,10 +91,13 @@ export function createSectionsBySlice(doc: any): object {
     }
   })
   const allSectionsReady = setSectionRichText(newObject)
+  if (allSectionsReady.body) {
+    delete allSectionsReady.body 
+  }
   return allSectionsReady
 }
 
-export const createLoopableSections = function(pageObject: any) {
+export function createLoopableSections(pageObject: any): any {
   const sections = {}
   const sectionTypes = Object.keys({ ...pageObject })
   sectionTypes.map(sectionType => {
@@ -121,4 +124,5 @@ export const createLoopableSections = function(pageObject: any) {
   })
   return sections
 }
+
 

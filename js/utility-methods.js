@@ -23,7 +23,7 @@ export function objectKeysToCamelCase(snake_case_object) {
     });
     return camelCaseObject;
 }
-export function prepareSnakeCaseData(data) {
+export function convertSnakeToCamel(data) {
     if (Array.isArray(data)) {
         return data.map(d => {
             return objectKeysToCamelCase(JSON.parse(JSON.stringify(d)));
