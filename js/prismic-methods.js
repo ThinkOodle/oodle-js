@@ -49,6 +49,8 @@ export function sectionBySliceType(data, section, i) {
     return slice;
 }
 export function createSectionsBySlice(doc) {
+    if (!doc.body)
+        return doc;
     const newObject = Object.assign({}, doc);
     const body = [...doc.body];
     const count = {};

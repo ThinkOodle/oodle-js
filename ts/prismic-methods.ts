@@ -70,6 +70,7 @@ export function sectionBySliceType(
 }
 
 export function createSectionsBySlice(doc: any): object {
+  if (!doc.body) return doc
   const newObject = { ...doc }
   const body = [...doc.body]
   const count = {}
