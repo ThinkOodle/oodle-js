@@ -1,4 +1,4 @@
-import { camelCase, forEach, isArray, isPlainObject } from "lodash";
+import { camelCase, forEach, isArray, isPlainObject } from 'lodash';
 export function convertSingleObjectToArray(obj) {
     return Array.isArray(obj) ? obj : [obj];
 }
