@@ -119,11 +119,6 @@ export const createLoopableSections = function(pageObject: any) {
       sections[sectionType].push(pageObject[sectionType])
     }
   })
-  pageObject.loopableSections = sections
-  return pageObject
+  return sections
 }
 
-import { prepareSnakeCaseData } from './utility-methods'
-export function formatResponse(dataSet: any) {
-  return prepareSnakeCaseData(createLoopableSections(dataSet))
-}

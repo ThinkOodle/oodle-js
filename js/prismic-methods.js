@@ -91,10 +91,5 @@ export const createLoopableSections = function (pageObject) {
             sections[sectionType].push(pageObject[sectionType]);
         }
     });
-    pageObject.loopableSections = sections;
-    return pageObject;
+    return sections;
 };
-import { prepareSnakeCaseData } from './utility-methods';
-export function formatResponse(dataSet) {
-    return prepareSnakeCaseData(createLoopableSections(dataSet));
-}
