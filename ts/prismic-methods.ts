@@ -1,4 +1,4 @@
-import { PrismicDocument, PrismicSlice } from '../types/prismic'
+import { PrismicDocument, PrismicSlice, PrismicResponse } from '../types'
 
 export function linkResolver(doc: PrismicDocument): string {
   if (doc.isBroken) {
@@ -125,4 +125,11 @@ export function createLoopableSections(pageObject: any): any {
   return sections
 }
 
-
+import { cloneDeep } from 'lodash'
+import { convertSnakeToCamel } from './utility-methods'
+export function createLoopablePage(page: PrismicResponse): any {
+  const pageClone: any = createSectionsBySlice(cloneDeep(page))
+  const loopableSections = convertSnakeToCamel(createLoopableSections((pageClone)))
+  pageClone.loopableSections = loopableSections
+  return convertSnakeToCamel(pageClone)
+}

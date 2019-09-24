@@ -96,3 +96,11 @@ export function createLoopableSections(pageObject) {
     });
     return sections;
 }
+import { cloneDeep } from 'lodash';
+import { convertSnakeToCamel } from './utility-methods';
+export function createLoopablePage(page) {
+    const pageClone = createSectionsBySlice(cloneDeep(page));
+    const loopableSections = convertSnakeToCamel(createLoopableSections((pageClone)));
+    pageClone.loopableSections = loopableSections;
+    return convertSnakeToCamel(pageClone);
+}

@@ -1,17 +1,11 @@
 import Prismic from 'prismic-javascript'
-import { PrismicAPI } from '../types'
-
-interface PrismicDoc {
-  data: any;
-  id?: string | number;
-  uid?: string | number;
-}
+import { PrismicAPI, PrismicResponse } from '../types'
 
 export function getDocTypeByID(
   prismicEndpoint: string,
   docType: string,
   UID: string
-): Promise<PrismicDoc> {
+): Promise<PrismicResponse> {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getByUID(docType, UID)
@@ -31,7 +25,7 @@ export function getDocTypeByID(
 export function getSingleDocByType(
   prismicEndpoint: string,
   docType: string
-): Promise<PrismicDoc> {
+): Promise<PrismicResponse> {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getSingle(docType)

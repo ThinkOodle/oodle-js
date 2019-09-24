@@ -1,3 +1,9 @@
+export interface PrismicResponse {
+  data: any;
+  id?: string | number;
+  uid?: string | number;
+}
+
 export interface PrismicAPI {
   getDocTypeByID: (
     docType: string,
