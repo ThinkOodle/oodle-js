@@ -1,6 +1,8 @@
-import { PrismicDocument, PrismicSlice, PrismicResponse } from '../types'
+import htmlSerializer from '../utils/html-serializer'
+import prismicDOM from 'prismic-dom'
+import { convertSnakeToCamel } from './utility-methods'
 
-export function linkResolver(doc: PrismicDocument): string {
+export function linkResolver(doc) {
   if (doc.isBroken) {
     return '/not-found'
   }
@@ -13,124 +15,70 @@ export function linkResolver(doc: PrismicDocument): string {
   return '/not-found'
 }
 
-import htmlSerializer from '../utils/html-serializer'
-import prismicDOM from 'prismic-dom'
-export const setSectionRichText = function(
-  section: PrismicSlice,
-): any {
-  const keys: string[] = Object.keys(section)
-  keys.map((key: string) => {
-    if (section[key]) {
-      if (section[key]['primary']) {
-        const primeKeys: string[] = Object.keys(section[key]['primary'])
-        primeKeys.map((pKey: string) => {
-          if (Array.isArray(section[key]['primary'][pKey])) {
-            section[key]['primary'][
-              `${pKey}_serialized`
-            ] = prismicDOM.RichText.asHtml(
-              section[key]['primary'][pKey],
-              linkResolver,
-              htmlSerializer,
-            )
-          }
-        })
-      }
-      if (section[key]['items']) {
-        const items = section[key]['items']
-        items.map(item => {
-          const itemKeys: string[] = Object.keys(item)
-          itemKeys.map(iKey => {
-            if (Array.isArray(item[iKey])) {
-              item[`${iKey}_serialized`] = prismicDOM.RichText.asHtml(
-                item[iKey],
-                linkResolver,
-                htmlSerializer,
-              )
-            }
-          })
-        })
-      }
+export function mergeResponse(res) {
+  if (res) {
+    const wholeObject = {
+      ...res,
+      ...res.data,
     }
-  })
+    delete wholeObject.data
+    return {
+      ...wholeObject,
+    }
+  }
+}
+
+export function setSectionRichText(section) {
+  if (section['primary']) {
+    const primeKeys = Object.keys(section['primary'])
+    primeKeys.map(pKey => {
+      if (Array.isArray(section['primary'][pKey])) {
+        section['primary'][`${pKey}_serialized`] = prismicDOM.RichText.asHtml(
+          section['primary'][pKey],
+          linkResolver,
+          htmlSerializer,
+        )
+      }
+    })
+  }
+  if (section['items']) {
+    const items = section['items']
+    items.map(item => {
+      const itemKeys = Object.keys(item)
+      itemKeys.map(iKey => {
+        if (Array.isArray(item[iKey])) {
+          item[`${iKey}_serialized`] = prismicDOM.RichText.asHtml(
+            item[iKey],
+            linkResolver,
+            htmlSerializer,
+          )
+        }
+      })
+    })
+  }
   return section
 }
 
-export function sectionBySliceType(
-  data: any,
-  section: object,
-  i?: number | string,
-): PrismicSlice {
-  const slice = data.find(obj => {
-    return obj === section
-  })
-  if (i) {
-    slice.index = i
-  }
-  return slice
-}
-
-export function createSectionsBySlice(doc: any): object {
-  if (!doc.body) return doc
-  const newObject = { ...doc }
-  const body = [...doc.body]
-  const count = {}
-  body.map(section => {
-    const label = section.slice_type
-    count[label] = 1
-  })
-  body.map((section, i) => {
-    const label = section.slice_type
-    if (newObject[label] !== undefined) {
-      newObject[`${label}_${count[label] + 1}`] = sectionBySliceType(
-        body,
-        section,
-        i,
-      ) as PrismicSlice
-      count[label] += 1
+export function createLoopableSections(doc) {
+  const slices = {}
+  doc.body.map(slice => {
+    const modSlice = { items: slice.items, primary: slice.primary }
+    if (slices[slice.sliceType || slice.slice_type]) {
+      slices[slice.sliceType || slice.slice_type].push(
+        setSectionRichText(modSlice),
+      )
     } else {
-      newObject[label] = sectionBySliceType(body, section, i) as PrismicSlice
+      slices[slice.sliceType || slice.slice_type] = []
+      slices[slice.sliceType || slice.slice_type].push(
+        setSectionRichText(modSlice),
+      )
     }
   })
-  const allSectionsReady = setSectionRichText(newObject)
-  if (allSectionsReady.body) {
-    delete allSectionsReady.body 
-  }
-  return allSectionsReady
+  doc.slices = slices
+  delete doc.body
+  return doc
 }
 
-export function createLoopableSections(pageObject: any): any {
-  const sections = {}
-  const sectionTypes = Object.keys({ ...pageObject })
-  sectionTypes.map(sectionType => {
-    let duplicate = false
-    let dupeSection
-    sectionTypes.map(sectionTypeB => {
-      if (
-        sectionType.includes(sectionTypeB) &&
-        sectionType !== sectionTypeB &&
-        Number.isInteger(
-          parseInt(sectionType.substring(sectionType.lastIndexOf('_') + 1))
-        )
-      ) {
-        duplicate = true
-        dupeSection = sectionTypeB
-      }
-    })
-    if (duplicate) {
-      sections[dupeSection].push(pageObject[sectionType])
-    } else {
-      sections[sectionType] = []
-      sections[sectionType].push(pageObject[sectionType])
-    }
-  })
-  return sections
-}
-
-import { cloneDeep } from 'lodash'
-import { convertSnakeToCamel } from './utility-methods'
-export function createLoopablePage(page: PrismicResponse): any {
-  const pageClone: any = createSectionsBySlice(cloneDeep(page))
-  const loopableSections = convertSnakeToCamel(createLoopableSections((pageClone)))
-  pageClone.loopableSections = loopableSections
-  return convertSnakeToCamel(pageClone)
+export function createPage(res) {
+  return convertSnakeToCamel(createLoopableSections(mergeResponse(res)))
 }
