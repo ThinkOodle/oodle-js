@@ -10,11 +10,11 @@ export function getDocTypeByID(
     return api
       .getByUID(docType, UID)
       .then(res => {
-        return {
+        return res ? {
           ...res.data,
           id: res.id,
           uid: res.uid
-        }
+        } : undefined
       })
       .catch(err => {
         throw err
@@ -30,11 +30,11 @@ export function getSingleDocByType(
     return api
       .getSingle(docType)
       .then(res => {
-        return {
+        return res ? {
           ...res.data,
           id: res.id,
           uid: docType
-        }
+        } : undefined
       })
       .catch(err => {
         throw err
@@ -47,7 +47,7 @@ export function getAllDocs(prismicEndpoint: string): any {
     // @ts-ignore
     return api
       .query()
-      .then(res => res)
+      .then(res => res ? res : undefined)
       .catch(err => {
         throw err
       })

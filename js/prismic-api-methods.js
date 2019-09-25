@@ -4,7 +4,7 @@ export function getDocTypeByID(prismicEndpoint, docType, UID) {
         return api
             .getByUID(docType, UID)
             .then(res => {
-            return Object.assign({}, res.data, { id: res.id, uid: res.uid });
+            return res ? Object.assign({}, res.data, { id: res.id, uid: res.uid }) : undefined;
         })
             .catch(err => {
             throw err;
@@ -16,7 +16,7 @@ export function getSingleDocByType(prismicEndpoint, docType) {
         return api
             .getSingle(docType)
             .then(res => {
-            return Object.assign({}, res.data, { id: res.id, uid: docType });
+            return res ? Object.assign({}, res.data, { id: res.id, uid: docType }) : undefined;
         })
             .catch(err => {
             throw err;
@@ -28,7 +28,7 @@ export function getAllDocs(prismicEndpoint) {
         // @ts-ignore
         return api
             .query()
-            .then(res => res)
+            .then(res => res ? res : undefined)
             .catch(err => {
             throw err;
         });
