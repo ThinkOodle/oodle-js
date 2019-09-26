@@ -25,7 +25,7 @@ export function objectKeysToCamelCase(snake_case_object): object {
   return camelCaseObject
 }
 
-export function convertSnakeToCamel(data): any | any[] {
+export function convertSnakeToCamel(data): any {
   if (Array.isArray(data)) {
     return data.map(d => {
       return objectKeysToCamelCase(JSON.parse(JSON.stringify(d)))

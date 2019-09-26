@@ -15,7 +15,7 @@ export function linkResolver(doc) {
 }
 export function mergeResponse(res) {
     if (res) {
-        const wholeObject = Object.assign({}, res, res.data);
+        const wholeObject = Object.assign({}, res, res.data, { slices: undefined });
         delete wholeObject.data;
         return Object.assign({}, wholeObject);
     }
@@ -44,8 +44,11 @@ export function setSectionRichText(section) {
 }
 export function createLoopableSections(doc) {
     const slices = {};
-    doc.body.map(slice => {
-        const modSlice = { items: slice.items, primary: slice.primary };
+    doc.body.map((slice) => {
+        const modSlice = {
+            items: slice.items,
+            primary: slice.primary,
+        };
         if (slices[slice.sliceType || slice.slice_type]) {
             slices[slice.sliceType || slice.slice_type].push(setSectionRichText(modSlice));
         }
@@ -54,10 +57,10 @@ export function createLoopableSections(doc) {
             slices[slice.sliceType || slice.slice_type].push(setSectionRichText(modSlice));
         }
     });
-    doc.slices = slices;
     delete doc.body;
-    return doc;
+    return Object.assign({}, doc, { slices: slices });
 }
 export function createPage(res) {
+    // always convertSnakeToCamel last
     return convertSnakeToCamel(createLoopableSections(mergeResponse(res)));
 }

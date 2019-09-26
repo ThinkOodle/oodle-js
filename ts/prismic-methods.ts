@@ -1,8 +1,17 @@
 import htmlSerializer from '../utils/html-serializer'
 import prismicDOM from 'prismic-dom'
 import { convertSnakeToCamel } from './utility-methods'
+import {
+  PrismicDocument,
+  MergerdPrismicSingleDocResponse,
+  FormattedDocument,
+  ModifiedSlice,
+  Slice,
+  CamelCasedFormattedDocument,
+} from '../types/prismic'
+import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
 
-export function linkResolver(doc) {
+export function linkResolver(doc: PrismicDocument): string {
   if (doc.isBroken) {
     return '/not-found'
   }
@@ -15,11 +24,12 @@ export function linkResolver(doc) {
   return '/not-found'
 }
 
-export function mergeResponse(res) {
+export function mergeResponse(res: Document): MergerdPrismicSingleDocResponse {
   if (res) {
     const wholeObject = {
       ...res,
       ...res.data,
+      slices: undefined,
     }
     delete wholeObject.data
     return {
@@ -28,7 +38,7 @@ export function mergeResponse(res) {
   }
 }
 
-export function setSectionRichText(section) {
+export function setSectionRichText(section: ModifiedSlice): ModifiedSlice {
   if (section['primary']) {
     const primeKeys = Object.keys(section['primary'])
     primeKeys.map(pKey => {
@@ -59,10 +69,15 @@ export function setSectionRichText(section) {
   return section
 }
 
-export function createLoopableSections(doc) {
-  const slices = {}
-  doc.body.map(slice => {
-    const modSlice = { items: slice.items, primary: slice.primary }
+export function createLoopableSections(
+  doc: MergerdPrismicSingleDocResponse,
+): FormattedDocument {
+  const slices: any = {}
+  doc.body.map((slice: Slice) => {
+    const modSlice: ModifiedSlice = {
+      items: slice.items,
+      primary: slice.primary,
+    }
     if (slices[slice.sliceType || slice.slice_type]) {
       slices[slice.sliceType || slice.slice_type].push(
         setSectionRichText(modSlice),
@@ -74,11 +89,11 @@ export function createLoopableSections(doc) {
       )
     }
   })
-  doc.slices = slices
   delete doc.body
-  return doc
+  return { ...doc, slices: slices }
 }
 
-export function createPage(res) {
+export function createPage(res: Document): CamelCasedFormattedDocument {
+  // always convertSnakeToCamel last
   return convertSnakeToCamel(createLoopableSections(mergeResponse(res)))
 }

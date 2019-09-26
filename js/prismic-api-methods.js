@@ -27,10 +27,9 @@ export function getSingleDocByType(prismicEndpoint, docType) {
 }
 export function getAllDocs(prismicEndpoint) {
     return Prismic.getApi(prismicEndpoint).then(api => {
-        // @ts-ignore
         return api
-            .query()
-            .then(res => res ? res : undefined)
+            .query('', { pageSize: 100 })
+            .then(res => (res ? res : undefined))
             .catch(err => {
             throw err;
         });
@@ -39,5 +38,5 @@ export function getAllDocs(prismicEndpoint) {
 export const prismic = {
     getDocTypeByID,
     getSingleDocByType,
-    getAllDocs
+    getAllDocs,
 };

@@ -1,11 +1,13 @@
 import Prismic from 'prismic-javascript'
-import { PrismicAPI, PrismicResponse } from '../types'
+import { PrismicAPI } from '../types'
+import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
+import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
 
 export function getDocTypeByID(
   prismicEndpoint: string,
   docType: string,
-  UID: string
-): Promise<PrismicResponse> {
+  UID: string,
+): Promise<Document> {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getByUID(docType, UID)
@@ -20,8 +22,8 @@ export function getDocTypeByID(
 
 export function getSingleDocByType(
   prismicEndpoint: string,
-  docType: string
-): Promise<PrismicResponse> {
+  docType: string,
+): Promise<Document> {
   return Prismic.getApi(prismicEndpoint).then(api => {
     return api
       .getSingle(docType)
@@ -34,12 +36,13 @@ export function getSingleDocByType(
   })
 }
 
-export function getAllDocs(prismicEndpoint: string): any {
+export function getAllDocs(
+  prismicEndpoint: string,
+): Promise<ApiSearchResponse> {
   return Prismic.getApi(prismicEndpoint).then(api => {
-    // @ts-ignore
     return api
-      .query()
-      .then(res => res ? res : undefined)
+      .query('', { pageSize: 100 })
+      .then(res => (res ? res : undefined))
       .catch(err => {
         throw err
       })
@@ -49,5 +52,5 @@ export function getAllDocs(prismicEndpoint: string): any {
 export const prismic: PrismicAPI = {
   getDocTypeByID,
   getSingleDocByType,
-  getAllDocs
+  getAllDocs,
 }
