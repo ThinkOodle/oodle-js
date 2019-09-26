@@ -3,50 +3,65 @@ import { PrismicAPI } from '../types'
 import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
 import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
 
-export function getDocTypeByID(
+export async function getDocTypeByID(
   prismicEndpoint: string,
   docType: string,
   UID: string,
+  req: Request,
 ): Promise<Document> {
-  return Prismic.getApi(prismicEndpoint).then(api => {
-    return api
-      .getByUID(docType, UID)
-      .then(res => {
-        if (res) return res
-      })
-      .catch(err => {
-        throw err
-      })
-  })
+  let api
+  if (req) {
+    api = await Prismic.getApi(prismicEndpoint, { req })
+  } else {
+    api = await Prismic.getApi(prismicEndpoint)
+  }
+  return api
+    .getByUID(docType, UID)
+    .then(res => {
+      if (res) return res
+    })
+    .catch(err => {
+      throw err
+    })
 }
 
-export function getSingleDocByType(
+export async function getSingleDocByType(
   prismicEndpoint: string,
   docType: string,
+  req: Request,
 ): Promise<Document> {
-  return Prismic.getApi(prismicEndpoint).then(api => {
-    return api
-      .getSingle(docType)
-      .then(res => {
-        if (res) return res
-      })
-      .catch(err => {
-        throw err
-      })
-  })
+  let api
+  if (req) {
+    api = await Prismic.getApi(prismicEndpoint, { req })
+  } else {
+    api = await Prismic.getApi(prismicEndpoint)
+  }
+  return api
+    .getSingle(docType)
+    .then(res => {
+      if (res) return res
+    })
+    .catch(err => {
+      throw err
+    })
 }
 
-export function getAllDocs(
+export async function getAllDocs(
   prismicEndpoint: string,
+  req: Request,
 ): Promise<ApiSearchResponse> {
-  return Prismic.getApi(prismicEndpoint).then(api => {
-    return api
-      .query('', { pageSize: 100 })
-      .then(res => (res ? res : undefined))
-      .catch(err => {
-        throw err
-      })
-  })
+  let api
+  if (req) {
+    api = await Prismic.getApi(prismicEndpoint, { req })
+  } else {
+    api = await Prismic.getApi(prismicEndpoint)
+  }
+  return api
+    .query('', { pageSize: 100 })
+    .then(res => (res ? res : undefined))
+    .catch(err => {
+      throw err
+    })
 }
 
 export const prismic: PrismicAPI = {

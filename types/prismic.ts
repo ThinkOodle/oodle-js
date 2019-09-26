@@ -16,7 +16,7 @@ export interface FormattedDocument extends MergerdPrismicSingleDocResponse {
   slices: Slice[];
 }
 
-export interface CamelCasedFormattedDocument{
+export interface CamelCasedFormattedDocument {
   id: string;
   uid?: string;
   type: string;
@@ -39,7 +39,7 @@ export interface Slice {
   primary: object;
 }
 
-export interface ModifiedSlice  {
+export interface ModifiedSlice {
   items: object[];
   primary: object;
 }
@@ -48,10 +48,15 @@ export interface PrismicAPI {
   getDocTypeByID: (
     docType: string,
     UID: string,
-    prismicEndpoint: string
+    prismicEndpoint: string,
+    req?: Request,
   ) => any;
-  getSingleDocByType: (prismicEndpoint: string, docType: string) => any;
-  getAllDocs: (prismicEndpoint: string) => any;
+  getSingleDocByType: (
+    prismicEndpoint: string,
+    docType: string,
+    req?: Request,
+  ) => any;
+  getAllDocs: (prismicEndpoint: string, req?: Request) => any;
 }
 
 export interface PrismicSlice {
