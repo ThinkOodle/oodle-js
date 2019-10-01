@@ -9,12 +9,9 @@ export async function getDocTypeByID(
   UID: string,
   req: Request,
 ): Promise<Document> {
-  let api
-  if (req) {
-    api = await Prismic.getApi(prismicEndpoint, { req })
-  } else {
-    api = await Prismic.getApi(prismicEndpoint)
-  }
+  const api = req
+    ? await Prismic.getApi(prismicEndpoint, { req })
+    : await Prismic.getApi(prismicEndpoint)
   return api
     .getByUID(docType, UID)
     .then(res => {
@@ -30,12 +27,9 @@ export async function getSingleDocByType(
   docType: string,
   req: Request,
 ): Promise<Document> {
-  let api
-  if (req) {
-    api = await Prismic.getApi(prismicEndpoint, { req })
-  } else {
-    api = await Prismic.getApi(prismicEndpoint)
-  }
+  const api = req
+    ? await Prismic.getApi(prismicEndpoint, { req })
+    : await Prismic.getApi(prismicEndpoint)
   return api
     .getSingle(docType)
     .then(res => {
@@ -50,12 +44,9 @@ export async function getAllDocs(
   prismicEndpoint: string,
   req: Request,
 ): Promise<ApiSearchResponse> {
-  let api
-  if (req) {
-    api = await Prismic.getApi(prismicEndpoint, { req })
-  } else {
-    api = await Prismic.getApi(prismicEndpoint)
-  }
+  const api = req
+    ? await Prismic.getApi(prismicEndpoint, { req })
+    : await Prismic.getApi(prismicEndpoint)
   return api
     .query('', { pageSize: 100 })
     .then(res => (res ? res : undefined))

@@ -19,7 +19,7 @@ export function linkResolver(doc: PrismicDocument): string {
     return '/'
   }
   if (doc.type === 'page') {
-    return '/page/' + doc.uid
+    return '/' + doc.uid
   }
   return '/not-found'
 }
@@ -71,12 +71,14 @@ export function setSectionRichText(section: ModifiedSlice): ModifiedSlice {
 
 export function createLoopableSections(
   doc: MergerdPrismicSingleDocResponse,
-): FormattedDocument {
+): FormattedDocument|MergerdPrismicSingleDocResponse {
+  if (!doc.body) return doc
   const slices: any = {}
-  doc.body.map((slice: Slice) => {
+  doc.body.map((slice: Slice, index) => {
     const modSlice: ModifiedSlice = {
       items: slice.items,
       primary: slice.primary,
+      order: index
     }
     if (slices[slice.sliceType || slice.slice_type]) {
       slices[slice.sliceType || slice.slice_type].push(

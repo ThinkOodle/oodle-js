@@ -9,13 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import Prismic from 'prismic-javascript';
 export function getDocTypeByID(prismicEndpoint, docType, UID, req) {
     return __awaiter(this, void 0, void 0, function* () {
-        let api;
-        if (req) {
-            api = yield Prismic.getApi(prismicEndpoint, { req });
-        }
-        else {
-            api = yield Prismic.getApi(prismicEndpoint);
-        }
+        const api = req
+            ? yield Prismic.getApi(prismicEndpoint, { req })
+            : yield Prismic.getApi(prismicEndpoint);
         return api
             .getByUID(docType, UID)
             .then(res => {
@@ -29,13 +25,9 @@ export function getDocTypeByID(prismicEndpoint, docType, UID, req) {
 }
 export function getSingleDocByType(prismicEndpoint, docType, req) {
     return __awaiter(this, void 0, void 0, function* () {
-        let api;
-        if (req) {
-            api = yield Prismic.getApi(prismicEndpoint, { req });
-        }
-        else {
-            api = yield Prismic.getApi(prismicEndpoint);
-        }
+        const api = req
+            ? yield Prismic.getApi(prismicEndpoint, { req })
+            : yield Prismic.getApi(prismicEndpoint);
         return api
             .getSingle(docType)
             .then(res => {
@@ -49,13 +41,9 @@ export function getSingleDocByType(prismicEndpoint, docType, req) {
 }
 export function getAllDocs(prismicEndpoint, req) {
     return __awaiter(this, void 0, void 0, function* () {
-        let api;
-        if (req) {
-            api = yield Prismic.getApi(prismicEndpoint, { req });
-        }
-        else {
-            api = yield Prismic.getApi(prismicEndpoint);
-        }
+        const api = req
+            ? yield Prismic.getApi(prismicEndpoint, { req })
+            : yield Prismic.getApi(prismicEndpoint);
         return api
             .query('', { pageSize: 100 })
             .then(res => (res ? res : undefined))

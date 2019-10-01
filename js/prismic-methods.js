@@ -9,7 +9,7 @@ export function linkResolver(doc) {
         return '/';
     }
     if (doc.type === 'page') {
-        return '/page/' + doc.uid;
+        return '/' + doc.uid;
     }
     return '/not-found';
 }
@@ -43,11 +43,14 @@ export function setSectionRichText(section) {
     return section;
 }
 export function createLoopableSections(doc) {
+    if (!doc.body)
+        return doc;
     const slices = {};
-    doc.body.map((slice) => {
+    doc.body.map((slice, index) => {
         const modSlice = {
             items: slice.items,
             primary: slice.primary,
+            order: index
         };
         if (slices[slice.sliceType || slice.slice_type]) {
             slices[slice.sliceType || slice.slice_type].push(setSectionRichText(modSlice));

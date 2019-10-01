@@ -42,6 +42,7 @@ export interface Slice {
 export interface ModifiedSlice {
   items: object[];
   primary: object;
+  order: string|number;
 }
 
 export interface PrismicAPI {
