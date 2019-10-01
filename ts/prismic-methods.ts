@@ -78,7 +78,7 @@ export function createLoopableSections(
     const modSlice: ModifiedSlice = {
       items: slice.items,
       primary: slice.primary,
-      order: index
+      order: index * 2
     }
     if (slices[slice.sliceType || slice.slice_type]) {
       slices[slice.sliceType || slice.slice_type].push(
