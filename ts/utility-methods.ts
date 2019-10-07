@@ -65,12 +65,12 @@ export function queuePreLoadedImages(nestedDataSet, filter): string[] {
   Object.keys(flatRes).map(node => {
     if (
       typeof node !== 'string' ||
-      !node.toLowerCase().includes('url') ||
+      !node.toLowerCase().endsWith('url') ||
       (filter && !node.toLowerCase().includes(filter))
     )
       return
     imageTypes.map(imageType => {
-      if (flatRes[node].toLowerCase().includes(imageType)) {
+      if (flatRes[node].toLowerCase().endsWith(imageType)) {
         imageUrls.push(flatRes[node])
       }
     })
