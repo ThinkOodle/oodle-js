@@ -3,6 +3,22 @@ import { PrismicAPI } from '../types'
 import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
 import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
 
+export async function getByID(
+  prismicEndpoint: string,
+  ID: string,
+  req: Request,
+): Promise<Document> {
+  const api = await Prismic.getApi(prismicEndpoint, { req })
+  return api
+    .getByID(ID)
+    .then(res => {
+      if (res) return res
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
 export async function getDocTypeByID(
   prismicEndpoint: string,
   docType: string,

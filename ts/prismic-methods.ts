@@ -1,8 +1,6 @@
-import htmlSerializer from '../utils/html-serializer'
 import prismicDOM from 'prismic-dom'
 import { convertSnakeToCamel } from './utility-methods'
 import {
-  PrismicDocument,
   MergerdPrismicSingleDocResponse,
   FormattedDocument,
   ModifiedSlice,
@@ -10,19 +8,6 @@ import {
   CamelCasedFormattedDocument,
 } from '../types/prismic'
 import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
-
-export function linkResolver(doc: PrismicDocument): string {
-  if (doc.isBroken) {
-    return '/not-found'
-  }
-  if (doc.type === 'home') {
-    return '/'
-  }
-  if (doc.type === 'page') {
-    return '/' + doc.uid
-  }
-  return '/not-found'
-}
 
 export function mergeResponse(res: Document): MergerdPrismicSingleDocResponse {
   if (res) {
@@ -38,7 +23,7 @@ export function mergeResponse(res: Document): MergerdPrismicSingleDocResponse {
   }
 }
 
-export function setSectionRichText(section: ModifiedSlice): ModifiedSlice {
+export function setSectionRichText(section: ModifiedSlice, linkResolver, htmlSerializer): ModifiedSlice {
   if (section['primary']) {
     const primeKeys = Object.keys(section['primary'])
     primeKeys.map(pKey => {
@@ -82,12 +67,12 @@ export function createLoopableSections(
     }
     if (slices[slice.sliceType || slice.slice_type]) {
       slices[slice.sliceType || slice.slice_type].push(
-        setSectionRichText(modSlice),
+        modSlice,
       )
     } else {
       slices[slice.sliceType || slice.slice_type] = []
       slices[slice.sliceType || slice.slice_type].push(
-        setSectionRichText(modSlice),
+        modSlice,
       )
     }
   })

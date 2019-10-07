@@ -7,6 +7,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Prismic from 'prismic-javascript';
+export function getByID(prismicEndpoint, ID, req) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const api = yield Prismic.getApi(prismicEndpoint, { req });
+        return api
+            .getByID(ID)
+            .then(res => {
+            if (res)
+                return res;
+        })
+            .catch(err => {
+            throw err;
+        });
+    });
+}
 export function getDocTypeByID(prismicEndpoint, docType, UID, req) {
     return __awaiter(this, void 0, void 0, function* () {
         const api = req

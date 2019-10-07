@@ -1,18 +1,5 @@
-import htmlSerializer from '../utils/html-serializer';
 import prismicDOM from 'prismic-dom';
 import { convertSnakeToCamel } from './utility-methods';
-export function linkResolver(doc) {
-    if (doc.isBroken) {
-        return '/not-found';
-    }
-    if (doc.type === 'home') {
-        return '/';
-    }
-    if (doc.type === 'page') {
-        return '/' + doc.uid;
-    }
-    return '/not-found';
-}
 export function mergeResponse(res) {
     if (res) {
         const wholeObject = Object.assign({}, res, res.data, { slices: undefined });
@@ -20,7 +7,7 @@ export function mergeResponse(res) {
         return Object.assign({}, wholeObject);
     }
 }
-export function setSectionRichText(section) {
+export function setSectionRichText(section, linkResolver, htmlSerializer) {
     if (section['primary']) {
         const primeKeys = Object.keys(section['primary']);
         primeKeys.map(pKey => {
@@ -53,11 +40,11 @@ export function createLoopableSections(doc) {
             order: index * 2
         };
         if (slices[slice.sliceType || slice.slice_type]) {
-            slices[slice.sliceType || slice.slice_type].push(setSectionRichText(modSlice));
+            slices[slice.sliceType || slice.slice_type].push(modSlice);
         }
         else {
             slices[slice.sliceType || slice.slice_type] = [];
-            slices[slice.sliceType || slice.slice_type].push(setSectionRichText(modSlice));
+            slices[slice.sliceType || slice.slice_type].push(modSlice);
         }
     });
     delete doc.body;

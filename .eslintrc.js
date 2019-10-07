@@ -2,6 +2,7 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    browser: true
   },
   parser: '@typescript-eslint/parser',
   extends: [
@@ -14,6 +15,7 @@ module.exports = {
   },
   rules: {
     // 0 = off, 1 = warning, 2 = error
+    '@typescript-eslint/ban-ts-ignore':0,
     'ban-ts-ignore': 0,
     'no-explicit-any': 0,
     eqeqeq: 1,
