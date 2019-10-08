@@ -21,7 +21,7 @@ export function getByID(prismicEndpoint, ID, req) {
         });
     });
 }
-export function getDocTypeByID(prismicEndpoint, docType, UID, req) {
+export function getDocTypeByUID(prismicEndpoint, docType, UID, req) {
     return __awaiter(this, void 0, void 0, function* () {
         const api = req
             ? yield Prismic.getApi(prismicEndpoint, { req })
@@ -67,7 +67,8 @@ export function getAllDocs(prismicEndpoint, req) {
     });
 }
 export const prismic = {
-    getDocTypeByID,
+    getByID,
+    getDocTypeByUID,
     getSingleDocByType,
     getAllDocs,
 };

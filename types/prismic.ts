@@ -1,3 +1,6 @@
+import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
+import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
+
 export interface MergerdPrismicSingleDocResponse {
   id: string;
   uid?: string;
@@ -46,18 +49,23 @@ export interface ModifiedSlice {
 }
 
 export interface PrismicAPI {
-  getDocTypeByID: (
+  getByID: (
+    prismicEndpoint: string,
+    ID: string,
+    req?: Request,
+  ) => Promise<Document>;
+  getDocTypeByUID: (
     docType: string,
     UID: string,
     prismicEndpoint: string,
     req?: Request,
-  ) => any;
+  ) => Promise<Document>;
   getSingleDocByType: (
     prismicEndpoint: string,
     docType: string,
     req?: Request,
-  ) => any;
-  getAllDocs: (prismicEndpoint: string, req?: Request) => any;
+  ) => Promise<Document>;
+  getAllDocs: (prismicEndpoint: string, req?: Request) => Promise<ApiSearchResponse>;
 }
 
 export interface PrismicSlice {

@@ -19,7 +19,7 @@ export async function getByID(
     })
 }
 
-export async function getDocTypeByID(
+export async function getDocTypeByUID(
   prismicEndpoint: string,
   docType: string,
   UID: string,
@@ -72,7 +72,8 @@ export async function getAllDocs(
 }
 
 export const prismic: PrismicAPI = {
-  getDocTypeByID,
+  getByID,
+  getDocTypeByUID,
   getSingleDocByType,
   getAllDocs,
 }
