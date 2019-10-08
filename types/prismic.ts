@@ -1,7 +1,7 @@
 import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
 import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
 
-export interface MergerdPrismicSingleDocResponse {
+export interface MergerdPrismicSingleDocResponse  {
   id: string;
   uid?: string;
   type: string;
@@ -9,14 +9,47 @@ export interface MergerdPrismicSingleDocResponse {
   tags: string[];
   slugs: string[];
   lang?: string;
+  document_name?: string;
   alternate_languages: string[];
+  meta_title?: string;
+  meta_description?: string;
+  meta_image?: object;
   first_publication_date: string | null;
   last_publication_date: string | null;
-  body: [];
+  linked_documents?: [];
+  slices: undefined;
+  body: object[];
 }
 
-export interface FormattedDocument extends MergerdPrismicSingleDocResponse {
-  slices: Slice[];
+
+
+export interface Slice {
+  slice_type?: string;
+  slice_label?: string;
+  sliceType?: string;
+  sliceLabel?: string;
+  items: object[];
+  primary: object;
+}
+
+
+export interface FormattedDocument  {
+  id: string;
+  uid?: string;
+  type: string;
+  href: string;
+  tags: string[];
+  slugs: string[];
+  lang?: string;
+  document_name?: string;
+  alternate_languages: string[];
+  meta_title?: string;
+  meta_description?: string;
+  meta_image?: object;
+  first_publication_date: string | null;
+  last_publication_date: string | null;
+  linked_documents?: [];
+  slices: object;
 }
 
 export interface CamelCasedFormattedDocument {
@@ -27,19 +60,14 @@ export interface CamelCasedFormattedDocument {
   tags: string[];
   slugs: string[];
   lang?: string;
+  documentName?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaImage?: object;
   alternateLanguages: string[];
-  firstPublication_date: string | null;
+  firstPublicationDate: string | null;
   lastPublicationDate: string | null;
-  slices: ModifiedSlice;
-}
-
-export interface Slice {
-  slice_type?: string;
-  slice_label?: string;
-  sliceType?: string;
-  sliceLabel?: string;
-  items: object[];
-  primary: object;
+  slices: object;
 }
 
 export interface ModifiedSlice {

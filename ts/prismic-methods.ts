@@ -1,5 +1,5 @@
 import prismicDOM from 'prismic-dom'
-import { convertSnakeToCamel } from './utility-methods'
+import { convertSnakeToCamel, flatten } from './utility-methods'
 import {
   MergerdPrismicSingleDocResponse,
   FormattedDocument,
@@ -23,12 +23,16 @@ export function mergeResponse(res: Document): MergerdPrismicSingleDocResponse {
   }
 }
 
-export function setSectionRichText(section: ModifiedSlice, linkResolver, htmlSerializer): ModifiedSlice {
+export function setSectionRichText(
+  section: Slice,
+  linkResolver: any,
+  htmlSerializer: any,
+): Slice {
   if (section['primary']) {
     const primeKeys = Object.keys(section['primary'])
     primeKeys.map(pKey => {
       if (Array.isArray(section['primary'][pKey])) {
-        section['primary'][`${pKey}_serialized`] = prismicDOM.RichText.asHtml(
+        section['primary'][`${pKey}Serialized`] = prismicDOM.RichText.asHtml(
           section['primary'][pKey],
           linkResolver,
           htmlSerializer,
@@ -42,7 +46,7 @@ export function setSectionRichText(section: ModifiedSlice, linkResolver, htmlSer
       const itemKeys = Object.keys(item)
       itemKeys.map(iKey => {
         if (Array.isArray(item[iKey])) {
-          item[`${iKey}_serialized`] = prismicDOM.RichText.asHtml(
+          item[`${iKey}Serialized`] = prismicDOM.RichText.asHtml(
             item[iKey],
             linkResolver,
             htmlSerializer,
@@ -56,31 +60,61 @@ export function setSectionRichText(section: ModifiedSlice, linkResolver, htmlSer
 
 export function createLoopableSections(
   doc: MergerdPrismicSingleDocResponse,
-): FormattedDocument|MergerdPrismicSingleDocResponse {
+  linkResolver?,
+  htmlSerializer?,
+): FormattedDocument | MergerdPrismicSingleDocResponse {
   if (!doc.body) return doc
-  const slices: any = {}
+  const slices = {}
   doc.body.map((slice: Slice, index) => {
+    if (linkResolver && htmlSerializer) {
+      slice = setSectionRichText(slice, linkResolver, htmlSerializer)
+    }
     const modSlice: ModifiedSlice = {
       items: slice.items,
       primary: slice.primary,
-      order: index * 2
+      order: index * 2,
     }
     if (slices[slice.sliceType || slice.slice_type]) {
-      slices[slice.sliceType || slice.slice_type].push(
-        modSlice,
-      )
+      slices[slice.sliceType || slice.slice_type].push(modSlice)
     } else {
       slices[slice.sliceType || slice.slice_type] = []
-      slices[slice.sliceType || slice.slice_type].push(
-        modSlice,
-      )
+      slices[slice.sliceType || slice.slice_type].push(modSlice)
     }
   })
   delete doc.body
   return { ...doc, slices: slices }
 }
 
-export function createPage(res: Document): CamelCasedFormattedDocument {
+export function createPage(
+  res: Document,
+  linkResolver,
+  htmlSerializer,
+): CamelCasedFormattedDocument {
   // always convertSnakeToCamel last
-  return convertSnakeToCamel(createLoopableSections(mergeResponse(res)))
+  return convertSnakeToCamel(
+    createLoopableSections(mergeResponse(res), linkResolver, htmlSerializer),
+  )
+}
+
+export function queuePreLoadedImages(
+  nestedDataSet: object | [],
+  filter?: string,
+): string[] {
+  const flatRes: object = flatten(nestedDataSet)
+  const imageUrls = []
+  const imageTypes = ['.jpg', '.jpeg', '.gif', '.svg', '.png']
+  Object.keys(flatRes).map(key => {
+    if (
+      typeof key !== 'string' ||
+      !key.toLowerCase().endsWith('url') ||
+      (filter && !key.toLowerCase().includes(filter))
+    )
+      return
+    imageTypes.map((imageType: string) => {
+      if (flatRes[key].toLowerCase().endsWith(imageType)) {
+        imageUrls.push(flatRes[key])
+      }
+    })
+  })
+  return imageUrls as string[]
 }

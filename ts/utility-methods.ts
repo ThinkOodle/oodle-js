@@ -4,9 +4,9 @@ export function convertSingleObjectToArray(obj: object): object[] {
   return Array.isArray(obj) ? obj : [obj]
 }
 
-export function objectKeysToCamelCase(snake_case_object): object {
+export function objectKeysToCamelCase(snakeCaseObject): object {
   const camelCaseObject = {}
-  forEach(snake_case_object, function(value, key) {
+  forEach(snakeCaseObject, function(value, key) {
     if (isPlainObject(value)) {
       // checks that a value is a plain object or an array - for recursive key conversion
       value = objectKeysToCamelCase(value) // recursively update keys of any values that are also objects
@@ -35,7 +35,7 @@ export function convertSnakeToCamel(data): any {
   }
 }
 
-export function flatten(data): object {
+export function flatten(data: object | []): object {
   const result = {}
   function recurse(cur, prop): void {
     if (Object(cur) !== cur) {
@@ -58,34 +58,8 @@ export function flatten(data): object {
   return result
 }
 
-export function queuePreLoadedImages(nestedDataSet, filter): string[] {
-  const flatRes = flatten(nestedDataSet)
-  const imageUrls = []
-  const imageTypes = ['.jpg', '.jpeg', '.gif', '.svg', '.png']
-  Object.keys(flatRes).map(node => {
-    if (
-      typeof node !== 'string' ||
-      !node.toLowerCase().endsWith('url') ||
-      (filter && !node.toLowerCase().includes(filter))
-    )
-      return
-    imageTypes.map(imageType => {
-      if (flatRes[node].toLowerCase().endsWith(imageType)) {
-        imageUrls.push(flatRes[node])
-      }
-    })
-  })
-  return imageUrls
-}
-
-export function preloadImages(imageArray): void {
-  //@ts-ignore
-  if (!preloadImages.list) {
-    //@ts-ignore
-    preloadImages.list = []
-  }
-  //@ts-ignore
-  const list = preloadImages.list
+export function preloadImages(imageArray: string[]): void {
+  const list = []
   for (let i = 0; i < imageArray.length; i++) {
     const img: HTMLImageElement = new Image()
     img.onload = function(): void {

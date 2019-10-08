@@ -1,5 +1,5 @@
 import prismicDOM from 'prismic-dom';
-import { convertSnakeToCamel } from './utility-methods';
+import { convertSnakeToCamel, flatten } from './utility-methods';
 export function mergeResponse(res) {
     if (res) {
         const wholeObject = Object.assign({}, res, res.data, { slices: undefined });
@@ -12,7 +12,7 @@ export function setSectionRichText(section, linkResolver, htmlSerializer) {
         const primeKeys = Object.keys(section['primary']);
         primeKeys.map(pKey => {
             if (Array.isArray(section['primary'][pKey])) {
-                section['primary'][`${pKey}_serialized`] = prismicDOM.RichText.asHtml(section['primary'][pKey], linkResolver, htmlSerializer);
+                section['primary'][`${pKey}Serialized`] = prismicDOM.RichText.asHtml(section['primary'][pKey], linkResolver, htmlSerializer);
             }
         });
     }
@@ -22,22 +22,25 @@ export function setSectionRichText(section, linkResolver, htmlSerializer) {
             const itemKeys = Object.keys(item);
             itemKeys.map(iKey => {
                 if (Array.isArray(item[iKey])) {
-                    item[`${iKey}_serialized`] = prismicDOM.RichText.asHtml(item[iKey], linkResolver, htmlSerializer);
+                    item[`${iKey}Serialized`] = prismicDOM.RichText.asHtml(item[iKey], linkResolver, htmlSerializer);
                 }
             });
         });
     }
     return section;
 }
-export function createLoopableSections(doc) {
+export function createLoopableSections(doc, linkResolver, htmlSerializer) {
     if (!doc.body)
         return doc;
     const slices = {};
     doc.body.map((slice, index) => {
+        if (linkResolver && htmlSerializer) {
+            slice = setSectionRichText(slice, linkResolver, htmlSerializer);
+        }
         const modSlice = {
             items: slice.items,
             primary: slice.primary,
-            order: index * 2
+            order: index * 2,
         };
         if (slices[slice.sliceType || slice.slice_type]) {
             slices[slice.sliceType || slice.slice_type].push(modSlice);
@@ -50,7 +53,24 @@ export function createLoopableSections(doc) {
     delete doc.body;
     return Object.assign({}, doc, { slices: slices });
 }
-export function createPage(res) {
+export function createPage(res, linkResolver, htmlSerializer) {
     // always convertSnakeToCamel last
-    return convertSnakeToCamel(createLoopableSections(mergeResponse(res)));
+    return convertSnakeToCamel(createLoopableSections(mergeResponse(res), linkResolver, htmlSerializer));
+}
+export function queuePreLoadedImages(nestedDataSet, filter) {
+    const flatRes = flatten(nestedDataSet);
+    const imageUrls = [];
+    const imageTypes = ['.jpg', '.jpeg', '.gif', '.svg', '.png'];
+    Object.keys(flatRes).map(key => {
+        if (typeof key !== 'string' ||
+            !key.toLowerCase().endsWith('url') ||
+            (filter && !key.toLowerCase().includes(filter)))
+            return;
+        imageTypes.map((imageType) => {
+            if (flatRes[key].toLowerCase().endsWith(imageType)) {
+                imageUrls.push(flatRes[key]);
+            }
+        });
+    });
+    return imageUrls;
 }

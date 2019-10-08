@@ -1,5 +1,5 @@
 import * as methods from '../ts/utility-methods'
-import { camelCaseObject, snakeCaseObject } from './mock/utilities.mock'
+import { camelCaseObject, snakeCaseObject, nestedResponseObject, flattenedResponseObject, imageArrayFromNestedResponseObject } from './mock/utilities.mock'
 
 describe(`the convertSingleObjectToArray method`, () => {
   it('returns an array if an object is passed in', () => {
@@ -34,3 +34,12 @@ describe(`the prepareSnakeCaseData method`, () => {
     ])
   })
 })
+
+describe(`the flatten method`, () => {
+  it('returns a deeply nested object or array as a single level object', () => {
+    expect(methods.flatten(nestedResponseObject)).toEqual(
+      flattenedResponseObject
+    )
+  })
+})
+
