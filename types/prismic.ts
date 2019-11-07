@@ -1,7 +1,7 @@
 import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
 import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
 
-export interface MergerdPrismicSingleDocResponse  {
+export interface MergerdPrismicSingleDocResponse {
   id: string;
   uid?: string;
   type: string;
@@ -21,8 +21,6 @@ export interface MergerdPrismicSingleDocResponse  {
   body: object[];
 }
 
-
-
 export interface Slice {
   slice_type?: string;
   slice_label?: string;
@@ -32,8 +30,7 @@ export interface Slice {
   primary: object;
 }
 
-
-export interface FormattedDocument  {
+export interface FormattedDocument {
   id: string;
   uid?: string;
   type: string;
@@ -73,27 +70,30 @@ export interface CamelCasedFormattedDocument {
 export interface ModifiedSlice {
   items: object[];
   primary: object;
-  order: string|number;
+  order: string | number;
 }
 
 export interface PrismicAPI {
   getByID: (
     prismicEndpoint: string,
     ID: string,
-    req?: Request,
+    options: PrismicFetchOptions,
   ) => Promise<Document>;
   getDocTypeByUID: (
     docType: string,
     UID: string,
     prismicEndpoint: string,
-    options: PrismicFetchOptions
+    options: PrismicFetchOptions,
   ) => Promise<Document>;
   getSingleDocByType: (
     prismicEndpoint: string,
     docType: string,
-    options: PrismicFetchOptions
+    options: PrismicFetchOptions,
   ) => Promise<Document>;
-  getAllDocs: (prismicEndpoint: string, req?: Request) => Promise<ApiSearchResponse>;
+  getAllDocs: (
+    prismicEndpoint: string,
+    options: PrismicFetchOptions,
+  ) => Promise<ApiSearchResponse>;
 }
 
 export interface PrismicSlice {

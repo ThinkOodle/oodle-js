@@ -6,8 +6,9 @@ import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearch
 export async function getByID(
   prismicEndpoint: string,
   ID: string,
-  req: Request,
+  options: PrismicFetchOptions = {}
 ): Promise<Document> {
+  const req = options.req as Request
   const api = await Prismic.getApi(prismicEndpoint, { req })
   return api
     .getByID(ID)
@@ -56,11 +57,10 @@ export async function getSingleDocByType(
 
 export async function getAllDocs(
   prismicEndpoint: string,
-  req: Request,
+  options: PrismicFetchOptions = {}
 ): Promise<ApiSearchResponse> {
-  const api = req
-    ? await Prismic.getApi(prismicEndpoint, { req })
-    : await Prismic.getApi(prismicEndpoint)
+  const req = options.req as Request
+  const api = await Prismic.getApi(prismicEndpoint, { req })
   return api
     .query('', { pageSize: 100 })
     .then(res => (res ? res : undefined))

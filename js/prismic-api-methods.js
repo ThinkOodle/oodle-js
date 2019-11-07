@@ -7,8 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import Prismic from 'prismic-javascript';
-export function getByID(prismicEndpoint, ID, req) {
+export function getByID(prismicEndpoint, ID, options = {}) {
     return __awaiter(this, void 0, void 0, function* () {
+        const req = options.req;
         const api = yield Prismic.getApi(prismicEndpoint, { req });
         return api
             .getByID(ID)
@@ -51,11 +52,10 @@ export function getSingleDocByType(prismicEndpoint, docType, options = {}) {
         });
     });
 }
-export function getAllDocs(prismicEndpoint, req) {
+export function getAllDocs(prismicEndpoint, options = {}) {
     return __awaiter(this, void 0, void 0, function* () {
-        const api = req
-            ? yield Prismic.getApi(prismicEndpoint, { req })
-            : yield Prismic.getApi(prismicEndpoint);
+        const req = options.req;
+        const api = yield Prismic.getApi(prismicEndpoint, { req });
         return api
             .query('', { pageSize: 100 })
             .then(res => (res ? res : undefined))
