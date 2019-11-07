@@ -86,12 +86,12 @@ export interface PrismicAPI {
     docType: string,
     UID: string,
     prismicEndpoint: string,
-    req?: Request,
+    options: PrismicFetchOptions
   ) => Promise<Document>;
   getSingleDocByType: (
     prismicEndpoint: string,
     docType: string,
-    req?: Request,
+    options: PrismicFetchOptions
   ) => Promise<Document>;
   getAllDocs: (prismicEndpoint: string, req?: Request) => Promise<ApiSearchResponse>;
 }
@@ -108,4 +108,9 @@ export interface PrismicDocument {
   isBroken: boolean;
   type: string;
   uid: string;
+}
+
+export interface PrismicFetchOptions {
+  req?: Request;
+  fetchLinks?: string[] | string;
 }

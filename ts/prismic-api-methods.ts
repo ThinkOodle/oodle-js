@@ -1,5 +1,5 @@
 import Prismic from 'prismic-javascript'
-import { PrismicAPI } from '../types'
+import { PrismicAPI, PrismicFetchOptions } from '../types'
 import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
 import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
 
@@ -23,13 +23,12 @@ export async function getDocTypeByUID(
   prismicEndpoint: string,
   docType: string,
   UID: string,
-  req: Request,
+  options: PrismicFetchOptions = {}
 ): Promise<Document> {
-  const api = req
-    ? await Prismic.getApi(prismicEndpoint, { req })
-    : await Prismic.getApi(prismicEndpoint)
+  const req = options.req as Request
+  const api = await Prismic.getApi(prismicEndpoint, { req })
   return api
-    .getByUID(docType, UID)
+    .getByUID(docType, UID,  { 'fetchLinks' : options.fetchLinks })
     .then(res => {
       if (res) return res
     })
@@ -41,13 +40,12 @@ export async function getDocTypeByUID(
 export async function getSingleDocByType(
   prismicEndpoint: string,
   docType: string,
-  req: Request,
+  options: PrismicFetchOptions = {}
 ): Promise<Document> {
-  const api = req
-    ? await Prismic.getApi(prismicEndpoint, { req })
-    : await Prismic.getApi(prismicEndpoint)
+  const req = options.req as Request
+  const api = await Prismic.getApi(prismicEndpoint,  { req } )
   return api
-    .getSingle(docType)
+    .getSingle(docType, { 'fetchLinks' : options.fetchLinks })
     .then(res => {
       if (res) return res
     })

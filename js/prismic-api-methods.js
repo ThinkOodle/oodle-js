@@ -21,13 +21,12 @@ export function getByID(prismicEndpoint, ID, req) {
         });
     });
 }
-export function getDocTypeByUID(prismicEndpoint, docType, UID, req) {
+export function getDocTypeByUID(prismicEndpoint, docType, UID, options = {}) {
     return __awaiter(this, void 0, void 0, function* () {
-        const api = req
-            ? yield Prismic.getApi(prismicEndpoint, { req })
-            : yield Prismic.getApi(prismicEndpoint);
+        const req = options.req;
+        const api = yield Prismic.getApi(prismicEndpoint, { req });
         return api
-            .getByUID(docType, UID)
+            .getByUID(docType, UID, { 'fetchLinks': options.fetchLinks })
             .then(res => {
             if (res)
                 return res;
@@ -37,13 +36,12 @@ export function getDocTypeByUID(prismicEndpoint, docType, UID, req) {
         });
     });
 }
-export function getSingleDocByType(prismicEndpoint, docType, req) {
+export function getSingleDocByType(prismicEndpoint, docType, options = {}) {
     return __awaiter(this, void 0, void 0, function* () {
-        const api = req
-            ? yield Prismic.getApi(prismicEndpoint, { req })
-            : yield Prismic.getApi(prismicEndpoint);
+        const req = options.req;
+        const api = yield Prismic.getApi(prismicEndpoint, { req });
         return api
-            .getSingle(docType)
+            .getSingle(docType, { 'fetchLinks': options.fetchLinks })
             .then(res => {
             if (res)
                 return res;
