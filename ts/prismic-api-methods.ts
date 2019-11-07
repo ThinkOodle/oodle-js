@@ -6,12 +6,12 @@ import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearch
 export async function getByID(
   prismicEndpoint: string,
   ID: string,
-  options: PrismicFetchOptions = {}
+  maybeOptions: PrismicFetchOptions = {}
 ): Promise<Document> {
-  const req = options.req as Request
+  const req = maybeOptions.req as Request
   const api = await Prismic.getApi(prismicEndpoint, { req })
   return api
-    .getByID(ID)
+    .getByID(ID, maybeOptions.options)
     .then(res => {
       if (res) return res
     })
@@ -24,12 +24,12 @@ export async function getDocTypeByUID(
   prismicEndpoint: string,
   docType: string,
   UID: string,
-  options: PrismicFetchOptions = {}
+  maybeOptions: PrismicFetchOptions = {}
 ): Promise<Document> {
-  const req = options.req as Request
+  const req = maybeOptions.req as Request
   const api = await Prismic.getApi(prismicEndpoint, { req })
   return api
-    .getByUID(docType, UID,  { 'fetchLinks' : options.fetchLinks })
+    .getByUID(docType, UID,  maybeOptions.options)
     .then(res => {
       if (res) return res
     })
@@ -41,12 +41,12 @@ export async function getDocTypeByUID(
 export async function getSingleDocByType(
   prismicEndpoint: string,
   docType: string,
-  options: PrismicFetchOptions = {}
+  maybeOptions: PrismicFetchOptions = {}
 ): Promise<Document> {
-  const req = options.req as Request
+  const req = maybeOptions.req as Request
   const api = await Prismic.getApi(prismicEndpoint,  { req } )
   return api
-    .getSingle(docType, { 'fetchLinks' : options.fetchLinks })
+    .getSingle(docType, maybeOptions.options)
     .then(res => {
       if (res) return res
     })
@@ -57,9 +57,9 @@ export async function getSingleDocByType(
 
 export async function getAllDocs(
   prismicEndpoint: string,
-  options: PrismicFetchOptions = {}
+  maybeOptions: PrismicFetchOptions = {}
 ): Promise<ApiSearchResponse> {
-  const req = options.req as Request
+  const req = maybeOptions.req as Request
   const api = await Prismic.getApi(prismicEndpoint, { req })
   return api
     .query('', { pageSize: 100 })

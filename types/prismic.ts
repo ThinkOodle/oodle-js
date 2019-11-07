@@ -1,4 +1,5 @@
 import { Document } from '../node_modules/prismic-javascript/d.ts/documents.d'
+import { QueryOptions } from '../node_modules/prismic-javascript/d.ts/ResolvedApi.d'
 import ApiSearchResponse from '../node_modules/prismic-javascript/d.ts/ApiSearchResponse.d'
 
 export interface MergerdPrismicSingleDocResponse {
@@ -112,5 +113,5 @@ export interface PrismicDocument {
 
 export interface PrismicFetchOptions {
   req?: Request;
-  fetchLinks?: string[] | string;
+  options?:  QueryOptions;
 }
