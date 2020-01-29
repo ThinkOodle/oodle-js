@@ -40,5 +40,8 @@
       "tabWidth": 2
     }
   },
-  "html.format.wrapAttributes": "force-aligned"
+  "html.format.wrapAttributes": "force-aligned",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

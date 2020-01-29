@@ -106,12 +106,12 @@ export function queuePreLoadedImages(
   Object.keys(flatRes).map(key => {
     if (
       typeof key !== 'string' ||
-      !key.toLowerCase().endsWith('url') ||
+      !key.toLowerCase().includes('url') ||
       (filter && !key.toLowerCase().includes(filter))
     )
       return
     imageTypes.map((imageType: string) => {
-      if (flatRes[key].toLowerCase().endsWith(imageType)) {
+      if (flatRes[key].toLowerCase().includes(imageType)) {
         imageUrls.push(flatRes[key])
       }
     })
