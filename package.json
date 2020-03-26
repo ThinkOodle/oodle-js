@@ -1,5 +1,5 @@
 {
-  "name": "@thinkoodle/oodle-js",
+  "name": "@oodletech/oodle-js",
   "version": "1.0.0",
   "description": "A utility library for Oodle projects.",
   "main": "js/index.js",
