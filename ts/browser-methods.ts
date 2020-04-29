@@ -18,8 +18,7 @@ export function isFirefox(): boolean {
 }
 
 export function isIE(): boolean {
-  const ua: string = window.navigator.userAgent.toLowerCase()
-  return ua.indexOf('msie') > -1
+  return (window.document as any).documentMode !== undefined
 }
 
 export function isEdge(): boolean {
