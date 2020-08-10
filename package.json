@@ -1,6 +1,6 @@
 {
   "name": "@oodletech/oodle-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A utility library for Oodle projects.",
   "main": "js/index.js",
   "scripts": {

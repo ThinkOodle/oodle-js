@@ -62,38 +62,42 @@ export function createLoopableSections(
   doc: MergerdPrismicSingleDocResponse,
   linkResolver?,
   htmlSerializer?,
-): FormattedDocument | MergerdPrismicSingleDocResponse {
-  if (!doc.body) return doc
-  const slices = {}
-  doc.body.map((slice: Slice, index) => {
-    if (linkResolver && htmlSerializer) {
-      slice = setSectionRichText(slice, linkResolver, htmlSerializer)
-    }
-    const modSlice: ModifiedSlice = {
-      items: slice.items,
-      primary: slice.primary,
-      order: index * 2,
-    }
-    if (slices[slice.sliceType || slice.slice_type]) {
-      slices[slice.sliceType || slice.slice_type].push(modSlice)
-    } else {
-      slices[slice.sliceType || slice.slice_type] = []
-      slices[slice.sliceType || slice.slice_type].push(modSlice)
-    }
-  })
-  delete doc.body
-  return { ...doc, slices: slices }
+): FormattedDocument | MergerdPrismicSingleDocResponse | undefined {
+  if (doc && !doc.body) {
+    return doc
+  } else if (doc && doc.body) {
+    const slices = {}
+    doc.body.map((slice: Slice, index) => {
+      if (linkResolver && htmlSerializer) {
+        slice = setSectionRichText(slice, linkResolver, htmlSerializer)
+      }
+      const modSlice: ModifiedSlice = {
+        items: slice.items,
+        primary: slice.primary,
+        order: index * 2,
+      }
+      if (slices[slice.sliceType || slice.slice_type]) {
+        slices[slice.sliceType || slice.slice_type].push(modSlice)
+      } else {
+        slices[slice.sliceType || slice.slice_type] = []
+        slices[slice.sliceType || slice.slice_type].push(modSlice)
+      }
+    })
+    delete doc.body
+    return { ...doc, slices: slices }
+  } else {
+    return undefined
+  }
 }
 
 export function createPage(
   res: Document,
   linkResolver,
   htmlSerializer,
-): CamelCasedFormattedDocument {
+): CamelCasedFormattedDocument | undefined {
   // always convertSnakeToCamel last
-  return convertSnakeToCamel(
-    createLoopableSections(mergeResponse(res), linkResolver, htmlSerializer),
-  )
+  const doc = createLoopableSections(mergeResponse(res), linkResolver, htmlSerializer)
+  return doc ? convertSnakeToCamel(doc) : undefined
 }
 
 export function queuePreLoadedImages(
