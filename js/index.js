@@ -6,3 +6,4 @@ export * from './prismic-methods';
 export * from './service-methods';
 export * from './prismic-api-methods';
 export * from './utility-methods';
+export * from './gtm-methods';
